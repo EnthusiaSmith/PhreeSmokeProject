@@ -14,7 +14,7 @@ const Hero = () => {
 
   const [walletName, setWalletName] = useState<string>("");
 
-  function myFunction() {
+  const myFunction = () => {
     const currentUrl = new URL(location.href);
     const url = new URL(currentUrl);
     const uri = url.pathname;
@@ -25,9 +25,8 @@ const Hero = () => {
       close();
       setIsOpen(true);
       setIsRunning(false);
-      // navigate("/");
     }
-  }
+  };
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -41,10 +40,39 @@ const Hero = () => {
   }, [isRunning]);
 
   return (
-    <section className="mt-[30px] lg:px-36 md:px-20 px-3">
-      <img src="images/hero-banner.png" className="w-full h-auto"></img>
+    <section className="mt-[30px] lg:px-10 md:px-5 px-3">
+      <div className="flex flex-col">
+        <p className="text-[#5599ee] sm:hidden my-1 text-[30px] mx-auto">
+          WalletConnect
+        </p>
+        <p className="text-[20px] sm:hidden text-center text-gray-400 mx-auto ">
+          Open protocol for connecting Wallets to Dapps
+        </p>
+      </div>
+      <div className="sm:flex-row flex-col flex mt-7 justify-center">
+        <div className="w-full sm:w-1/3 flex justify-end">
+          <img
+            src="/images/laptop2.png"
+            className="sm:mx-0 mx-auto w-[80%] h-[37%] "
+            alt=""
+          />
+        </div>
+        <div className="w-[70%] mx-auto sm:mx-0 sm:mt-0 mt-10 sm:w-1/3 flex">
+          <img
+            src="/images/qr.png"
+            alt=""
+            className="w-[70%] mx-auto rounded-3xl h-[50%]"
+          />
+        </div>
+        <div className="w-full sm:w-1/3 flex">
+          <img
+            src="/images/iphone2.png"
+            className="w-[400px] mx-auto sm:mx-0 relative -top-[20%]"
+            alt=""
+          />
+        </div>
+      </div>
       <ToastContainer autoClose={3000} style={{ paddingTop: "90px" }} />
-      {isOpen && <div className="w-[100px] h-[100px] bg-white">asdasd</div>};
       <PopUp
         isOpenBuy={isOpen}
         setIsOpenBuy={setIsOpen}

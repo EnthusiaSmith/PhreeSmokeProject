@@ -5,6 +5,9 @@ import WalletDetail from "./WalletDetail";
 
 import { useRef } from "react";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+
 interface PopUpProps {
   isOpenBuy: boolean;
   setIsOpenBuy: React.Dispatch<React.SetStateAction<boolean>>;
@@ -44,16 +47,17 @@ const PopUp: React.FC<PopUpProps> = (props) => {
             ref={modalRef}
             className="dialog relative font-Mont w-[90%] md:w-[400px] border-white border-2 rounded-lg bg-[#04011C] text-white"
           >
-            {/* <button
+            <FontAwesomeIcon
               onClick={() => {
                 setIsOpenBuy(false);
                 navigate("/");
                 setIsRunning(true);
               }}
-              className="text-4xl absolute right-5 top-3"
-            >
-              &times;
-            </button> */}
+              icon={faArrowLeft}
+              size="lg"
+              className="cursor-pointer"
+            />
+
             <WalletDetail walletName={walletName} />
           </div>
         </div>

